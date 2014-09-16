@@ -1,25 +1,25 @@
 require "rspec"
 require "date"
 
-require_relative "../pageview"
-require_relative "../viewparser"
+require_relative "../page_view"
+require_relative "../view_parser"
 
 describe ViewParser do
-  context "Upon parsing json" do
+  context "upon parsing json" do
 
-    let (:parser) { ViewParser.new }
+    let(:parser) { ViewParser.new }
 
-    let (:purchase_date) { Date.parse("2014-05-19") }
+    let(:purchase_date) { Date.parse("2014-05-19") }
 
-    let (:no_purchase_date) { Date.parse("2013-06-10") }
+    let(:no_purchase_date) { Date.parse("2013-06-10") }
 
-    let (:purchase_view) do
-      json = %q<[{"date":"2014-05-19","cohort":"A","result":1}]>
+    let(:purchase_view) do
+      json = '[{"date":"2014-05-19","cohort":"A","result":1}]'
       parser.parse(json)[0]
     end
 
-    let (:no_purchase_view) do
-      json = %q<[{"date":"2013-06-10","cohort":"B","result":0}]>
+    let(:no_purchase_view) do
+      json = '[{"date":"2013-06-10","cohort":"B","result":0}]'
       parser.parse(json)[0]
     end
 

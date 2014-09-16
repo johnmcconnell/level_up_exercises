@@ -1,14 +1,14 @@
 require "rspec"
 require "date"
 
-require_relative "../pageview"
+require_relative "../page_view"
 
 describe PageView do
-  context "Upon Creation" do
-    let (:testdate) { Date.parse("2001-02-03") }
+  context "upon creation" do
+    let(:testdate) { Date.parse("2001-02-03") }
 
-    let (:pageview) do
-      PageView.new(id:"idA", date: testdate, purchased: false)
+    let(:pageview) do
+      PageView.new(id: "idA", date: testdate, purchased: false)
     end
 
     it "will store parameters" do

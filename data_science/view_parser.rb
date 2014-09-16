@@ -1,6 +1,7 @@
 require "json"
+require "date"
 
-require_relative "pageview"
+require_relative "page_view"
 
 class ViewParser
   def parse(json)
@@ -10,7 +11,7 @@ class ViewParser
     end
   end
 
-private 
+  private
 
   def build_pageview(item)
     date = Date.parse(item["date"])
