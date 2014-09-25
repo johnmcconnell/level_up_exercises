@@ -1,6 +1,7 @@
 
 class Wire
-  attr_reader :color
+  attr_reader :color, :snipped
+  alias_method :snipped?, :snipped
   def initialize(color)
     @color = color
     @snipped = false
@@ -8,9 +9,5 @@ class Wire
 
   def snip
     @snipped = true
-  end
-
-  def snipped?
-    @snipped
   end
 end

@@ -36,7 +36,7 @@ describe WireBox do
     end
 
     it "should contain all the original colors" do
-      wire_colors = box.wires.map { |wire| wire.color }
+      wire_colors = box.wires.map(&:color)
       colors.each do |color|
         expect(wire_colors).to include(color)
       end
