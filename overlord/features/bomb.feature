@@ -38,8 +38,8 @@ Feature: Bomb
   Scenario: The user cuts the safe wire
     Given The bomb is armed with code "1234"
     When The user cuts the good wire
+    And The user waits for the time to expire
     And The user enters a valid code "1111"
-    And waits for the time to expire
     Then The bomb should not be blown up
 
   Scenario: The user cuts a live wire while
@@ -63,6 +63,6 @@ Feature: Bomb
 
   Scenario: The user waits too long
     Given The bomb is not armed
-    When The user enters a valid code "1111"
-    And waits for the time to expire
+    When The user waits for the time to expire
+    And The user enters a valid code "1111"
     Then The bomb should be blown up

@@ -29,10 +29,9 @@ class Overlord < Sinatra::Application
     redirect to('/')
   end
 
-  get '/set/:seconds' do
+  post '/set/:seconds' do
     @bomb = session[:bomb]
     timer.reset(params[:seconds].to_i)
-    redirect to('/')
   end
 
   get '/enter/:code' do

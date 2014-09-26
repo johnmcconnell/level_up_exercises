@@ -43,6 +43,6 @@ Then(/^The timer be close to "(.*?)"$/) do |seconds|
   expect(find("#timer-time", :visible => false)[:value].to_i).to be_within(2).of(seconds.to_i)
 end
 
-When(/^waits for the time to expire$/) do
-    visit("/set/0")
+When(/^The user waits for the time to expire$/) do
+    click_time_to_match_seconds("1")
 end

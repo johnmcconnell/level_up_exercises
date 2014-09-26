@@ -29,7 +29,7 @@ codebox = {
    "enter" : function() {
      if (this.stack.length < 4) { return; }
      formatted_code = this.formatted_code();
-     $.get("/set/" + timer.time, function() {
+     $.post("/set/" + timer.time, function() {
        window.location = "/enter/" + formatted_code;
      });
    }
