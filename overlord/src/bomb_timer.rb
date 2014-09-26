@@ -23,10 +23,11 @@ class BombTimer
     raise(TimerError, "cannot stop the timer. it is not running") unless started?
     @seconds_remaining = (deadline - Time.now)
     @started = false
+    @deadline = nil
   end
 
   def triggered?
-    if deadline.nil?
+    if !started?
       false
     else
       deadline < Time.now

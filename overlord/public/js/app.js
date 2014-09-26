@@ -28,7 +28,10 @@ codebox = {
    },
    "enter" : function() {
      if (this.stack.length < 4) { return; }
-     window.location = "/enter/" + this.formatted_code() + "/" + timer.time;
+     formatted_code = this.formatted_code();
+     $.get("/set/" + timer.time, function() {
+       window.location = "/enter/" + formatted_code;
+     });
    }
 }
 
@@ -133,8 +136,7 @@ window.onload = function() {
 
   var time_left = parseInt($('#timer-time').val());
   timer.update_time(time_left);
-  var active_state = $('#codebox table caption').attr('data-value');
-  if (active_state === "active") {
+  if ($('#timer-start').val() == "true") {
     timer.start();
   }
 }

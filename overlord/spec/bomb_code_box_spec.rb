@@ -89,7 +89,7 @@ describe BombCodeBox do
 
     it "should be triggered and not active" do
       expect(code_box).to be_triggered
-      expect(code_box).not_to be_active
+      expect(code_box).to be_active
     end
   end
 

@@ -10,3 +10,4 @@
   .row
     %button#timer-reset{class: "btn btn-lg col-sm-8 col-sm-offset-2 btn-primary", type: "reset"} reset
   %input#timer-time{type: "hidden", name: "timer-seconds", value: "#{timer.seconds_remaining}"}
+  %input#timer-start{type: "hidden", name: "timer-start", value: "#{timer.started?}"}

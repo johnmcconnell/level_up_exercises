@@ -24,21 +24,25 @@ class Overlord < Sinatra::Application
 
   get '/snip/:color' do
     @bomb = session[:bomb]
-    @bomb.devices[:wirebox].snip(params[:color].to_sym)
+    wirebox.snip(params[:color].to_sym)
+    timer.stop if timer.started? && wirebox.deactivated?
     redirect to('/')
   end
 
-  get '/enter/:code/:seconds' do
+  get '/set/:seconds' do
     @bomb = session[:bomb]
-    codebox = @bomb.devices[:codebox]
-    timer = @bomb.devices[:timer]
+    timer.reset(params[:seconds].to_i)
+    redirect to('/')
+  end
+
+  get '/enter/:code' do
+    @bomb = session[:bomb]
     if codebox.active?
       codebox.deactivate(params[:code])
       timer.stop unless codebox.active?
     else
       codebox.activate(params[:code])
-      timer.reset(params[:seconds].to_i)
-      timer.start
+      timer.start unless wirebox.deactivated?
     end
     redirect to('/')
   end
@@ -46,6 +50,16 @@ class Overlord < Sinatra::Application
   get '/reset' do
     session[:bomb] = new_bomb
     redirect to('/')
+  end
+
+  def deactivate(codebox, code)
+    codebox.deactivate(code)
+  end
+
+  def activate(codebox, timer, code, time)
+    codebox.activate(code)
+    timer.reset(time)
+    timer.start
   end
 
   def new_bomb
@@ -57,6 +71,18 @@ class Overlord < Sinatra::Application
 
   def random_wirebox
     WireBox.new(wire_colors: WIREBOX_COLORS, safe_color: WIREBOX_COLORS.sample)
+  end
+
+  def wirebox
+    @bomb.devices[:wirebox]
+  end
+
+  def codebox
+    @bomb.devices[:codebox]
+  end
+
+  def timer
+    @bomb.devices[:timer]
   end
 
   run! if app_file == $PROGRAM_NAME

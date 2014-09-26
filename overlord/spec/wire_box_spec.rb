@@ -15,6 +15,7 @@ describe WireBox do
     it "should not explode when green is clipped" do
       box.snip(:green)
       expect(box).not_to be_triggered
+      expect(box).to be_deactivated
     end
 
     it "should be triggered when red is clipped" do
