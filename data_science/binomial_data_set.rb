@@ -1,6 +1,8 @@
-require_relative "./binomial_data_group"
+require_relative "binomial_data_group"
+require_relative "binomial"
 
 class BinomialDataSet
+  include Binomial
   attr_reader :group_field, :groups
 
   def initialize(params)
@@ -10,48 +12,23 @@ class BinomialDataSet
     @groups = split_into_groups(@data)
   end
 
-  def fail_count
-    sum_field_in_groups(:fail_count)
-  end
-
-  def success_count
-    sum_field_in_groups(:success_count)
-  end
-
-  def fail_percent
-    fail_count.to_f / count
-  end
-
-  def success_percent
-    success_count.to_f / count
-  end
-
-  def count
-    sum_field_in_groups(:count)
-  end
-
   def to_s
-    format("DataSet:(total '#{count}', successes '#{success_count}', " \
-    "failures '#{fail_count}', percent success '%3f%%')", 100*success_percent)
+    base_string = "DataSet:(total '#{count}', successes '#{success_count}', " \
+    "failures '#{fail_count}', percent success '%3f%%')"
+    format(base_string, 100 * success_percent)
   end
 
   private
 
-  def sum_field_in_groups(field)
-    @groups.each_value.inject(0) do |sum, group|
-      sum + group.send(field)
+  def split_into_groups(data)
+    raw_groups = data.group_by(&@group_field)
+    raw_groups.each do |group_key, group|
+      raw_groups[group_key] = parse_group(group_key, group)
     end
   end
 
-  def split_into_groups(data)
-    groups = {}
-    data.group_by(&@group_field).each do |key, data_row|
-      groups[key] = BinomialDataGroup.new(
-        id: key, data: data_row,
-        group_field: @group_field,
-        result_field: @result_field
-      )
-    end
-    groups
+  def parse_group(group_key, data)
+    BinomialDataGroup.new(id: group_key, data: data,
+      group_field: @group_field, result_field: @result_field)
   end
 end
