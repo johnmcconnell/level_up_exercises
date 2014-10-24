@@ -15,6 +15,7 @@ describe WireBox do
     it "should not explode when green is clipped" do
       box.snip(:green)
       expect(box).not_to be_triggered
+      expect(box).to be_deactivated
     end
 
     it "should be triggered when red is clipped" do
@@ -36,7 +37,7 @@ describe WireBox do
     end
 
     it "should contain all the original colors" do
-      wire_colors = box.wires.map { |wire| wire.color }
+      wire_colors = box.wires.map(&:color)
       colors.each do |color|
         expect(wire_colors).to include(color)
       end

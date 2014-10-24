@@ -4,6 +4,9 @@
       - if wire.snipped?
         %div{class: "wire wire-snipped"}
       - else
-        %div{class: "wire wire-#{wire.color}", data:{value: wire.color}}
+        - if wire.safe?
+          %div{class: "wire wire-#{wire.color} safe-wire", data:{value: wire.color}}
+        -else
+          %div{class: "wire wire-#{wire.color} live-wire", data:{value: wire.color}}
 .row
   = haml :timer, :locals => { :timer => timer }

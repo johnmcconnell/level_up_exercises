@@ -15,7 +15,7 @@ class Bomb
   private
 
   def raise_bad_devices_error
-    raise(RuntimeError, "all devices must respond to triggered?")
+    raise("all devices must respond to triggered?")
   end
 
   def all_devices_respond_to_triggered?
