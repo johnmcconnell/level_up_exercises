@@ -37,10 +37,6 @@ class Triangle
     puts type_statement
     puts 'The angles of this triangle are ' + angles.join(',')
 
-    puts 'This triangle is also a right triangle!' if right_triangle?
-    puts ''
-  end
-
   def angles
     cos_a = cosine(adjacent1: @side2, adjacent2: @side3, opposite: @side1)
     cos_b = cosine(adjacent1: @side1, adjacent2: @side3, opposite: @side2)
